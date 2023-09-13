@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+ {# cargar el turbo con id ata-turbo-frame':'tablaEstudiante #}
+{#  data-action':'turbo':'submit-end-> cuando turbo finalice o el formulario finalice ejecutar el siguiente funcion en controller estudiante.js #}
+
+	{{ form_start(form,{'attr':{'data-turbo-frame':'tablaEstudiante', 'data-action':'turbo:submit-end->Colegio--estudiantes#cerraModal'}}) }}
+	<div class="container-fluid">
+		<div class="list-group-item">
+
+			<div class="mb-3 row">
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{form_label(form.apellidos, form.apellidos,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
+						</div>
+						{{form_widget(form.apellidos,{'attr':{'class':'form-control'}})}}
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-3 row">
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{form_label(form.nombres, form.nombres,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
+						</div>
+						{{form_widget(form.nombres,{'attr':{'class':'form-control'}})}}
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-3 row">
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{form_label(form.direccion, form.direccion,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
+						</div>
+						{{form_widget(form.direccion,{'attr':{'class':'form-control'}})}}
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-3 row">
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{form_label(form.fecha_nac, form.fecha_nac,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
+						</div>
+						{{form_widget(form.fecha_nac,{'attr':{'class':'form-control'}})}}
+					</div>
+				</div>
+			</div>
+
+
+			<div class="mb-3 row">
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{form_label(form.identificacion, form.identificacion,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
+						</div>
+						{{form_widget(form.identificacion,{'attr':{'class':'form-control'}})}}
+					</div>
+				</div>
+			</div>
+
+
+			<div class="mb-3 row">
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{form_label(form.foto, form.foto,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
+						</div>
+						{{form_widget(form.foto,{'attr':{'class':'form-control'}})}}
+					</div>
+				</div>
+			</div>
+
+
+			<div class="mb-3 row">
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{form_label(form.tipoid, form.tipoid,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
+						</div>
+						{{form_widget(form.tipoid,{'attr':{'class':'form-control'}})}}
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-3 row">
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{form_label(form.preferencias, form.preferencias,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
+						</div>
+						{{form_widget(form.preferencias,{'attr':{'class':'selectpicker'}})}}
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="list-group-item">
+        {{form_widget(form.submit,{'attr':{'class':'btn btn-primary'}})}}
+        </div>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock %}

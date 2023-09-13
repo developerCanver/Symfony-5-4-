@@ -1,0 +1,16 @@
+helloworld_index:
+    path: /hello/world
+    defaults: {_controller: App\Controller\Helloworld\helloWorldController::helloworld}
+
+helloTwig_index:
+    path: /hello/twig/{usuario}
+    defaults: {_controller: App\Controller\Helloworld\helloTwigController::helloTwig, usuario: 0}
+
+helloRedirect:
+    path: /hello/redirect
+    defaults: {_controller: App\Controller\Helloworld\helloTwigController::helloRedirect}    
+
+helloApi:
+    path: /hello/api
+    defaults: {_controller: App\Controller\Helloworld\helloTwigController::helloApi}    
+    methods: "POST"

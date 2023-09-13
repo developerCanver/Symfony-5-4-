@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	{# <div class="container" data-controller="Colegio--estudiantes"> #}
+	<div class="container" {{ stimulus_controller('Colegio--estudiantes',{'vrInicial':1000, 'url':path('colegioPromEdades') } )}}>
+		<div class="list-group-item active">
+			<h2>Listado General de estudiantes</h2>
+
+			<button type="button" data-action="Colegio--estudiantes#contador" class="btn btn-primary">Contador</button>
+			<button type="button" data-action="Colegio--estudiantes#promedio" class="btn btn-primary">Promedio de edades</button>
+			<button type="button" data-action="Colegio--estudiantes#promFecth" class="btn btn-primary">Promedio Fetch</button>
+
+			<button type="button" data-action="Colegio--estudiantes#nueEstudiante" class="btn btn-primary" data-colegio--estudiantes-urlform-param="{{path('colegioEstudCrear')}}">Crear Estudiante</button>
+
+			<div data-colegio--estudiantes-target="Mensaje">mensaje</div>
+		</div>
+		<div class="list-group-item">
+			<turbo-frame id="tablaEstudiante" src="{{path('colegioframeTablaEstud')}}">
+			<br><br><br>
+			{{ include("loadig.html.twig") }}
+			<center>
+				<span class="loader"></span>
+			</center>
+			</turbo-frame>
+		</div>
+
+		<!-- Modal -->
+
+
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-colegio--estudiantes-target="modalnueEst">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Crear Estudiante</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" data-colegio--estudiantes-target="modalFrmNewEst">
+						...
+					</div>
+				
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+{% endblock %}

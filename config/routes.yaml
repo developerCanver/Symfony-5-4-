@@ -1,0 +1,9 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+helloworld:
+    resource: "../src/Routing/Hello.yaml"
+
+colegio:
+    resource: "../src/Routing/Colegio.yaml"

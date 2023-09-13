@@ -1,0 +1,55 @@
+colegioautoWiring:
+    path: /colegio/autoWiring/{id}
+    defaults: {_controller: App\Controller\Colegio\tipoIdController::accesoAutoWriring}
+
+colegioFetchEM:
+    path: /colegio/colegioFetchEM/{id}
+    defaults: {_controller: App\Controller\Colegio\tipoIdController::accesoEntity}
+
+colegioFinOnBy:
+    path: /colegio/colegioFinOnBy/{id}
+    defaults: {_controller: App\Controller\Colegio\tipoIdController::accesoFinOnBy}
+
+colegioFO:
+    path: /colegio/colegioFO
+    defaults: {_controller: App\Controller\Colegio\tipoIdController::accesoFO}
+
+
+colegioFAll:
+    path: /colegio/colegioFAll
+    defaults: {_controller: App\Controller\Colegio\tipoIdController::accesoFAll}
+
+colegioQB:
+    path: /colegio/colegioQB
+    defaults: {_controller: App\Controller\Colegio\tipoIdController::accesoQB}
+
+colegioDQL:
+    path: /colegio/colegioDQL
+    defaults: {_controller: App\Controller\Colegio\tipoIdController::accesoDQL}
+
+colegioEstudListar:
+    path: /colegio/estudiantes/listar
+    defaults: {_controller: App\Controller\Colegio\estudianteController::listarEstudiantes}
+
+colegioframeTablaEstud:
+    path: /colegio/estudiantes/listarTablaEstu
+    defaults: {_controller: App\Controller\Colegio\estudianteController::frameTablaEstud}
+
+
+colegioEstudCrear:
+    path: /colegio/estudiantes/crear/{id}
+    defaults: {_controller: App\Controller\Colegio\estudianteController::crearEstudiantes, id: 0}
+
+colegioEstudGuardar:
+    path: /colegio/estudiantes/guardar/{id}
+    defaults: {_controller: App\Controller\Colegio\estudianteController::guardarEstudiantes, id: 0}
+
+colegioEstudEliminar:
+    path: /colegio/estudiantes/eliminar/{id}
+    defaults: {_controller: App\Controller\Colegio\estudianteController::eliminarEstudiante}
+
+colegioPromEdades:
+    path: /colegio/estudiantes/promedioEdades
+    defaults: {_controller: App\Controller\Colegio\estudianteController::promedioEdades}
+
+
