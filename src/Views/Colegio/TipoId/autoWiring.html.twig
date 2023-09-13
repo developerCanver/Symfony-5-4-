@@ -1,0 +1,39 @@
+ {% block block %}
+        
+    <h2>Presentacion de un Registro</h2>
+    <br>
+
+
+    <table border='1'>
+    <tr>
+      <td>Id</td>
+      <td>Tipo de Documento</td>
+    </tr>
+     <tr>
+
+     {% if tipoId is defined %}
+      <td>{{tipoId.id}}</td>
+      <td>{{tipoId.tipoId}}</td>  
+     {% endif %} 
+    </tr>
+    </table>
+
+     <h2>Presentacion de Multiples Registros</h2>
+    <br>
+    <table border='1'>
+    <tr>
+      <td>Id</td>
+      <td>Tipo de Documento</td>
+    </tr>
+    {% if registrosTi is defined %}
+      {% for datos in registrosTi %}
+            <tr>
+              <td>{{datos.id}}</td>
+              <td>{{datos.tipoId}}</td>
+            </tr>
+      {% endfor %}
+    {% endif %} 
+    </table>
+
+        
+    {% endblock %}

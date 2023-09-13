@@ -1,0 +1,42 @@
+<turbo-frame id="tablaEstudiante">
+<div class="count">
+    {{ estudiantes.getTotalItemCount }}
+</div>
+	<table class="table table-sm table-striped table-hover">
+		<tr>
+			<td></td>
+			<td>Id</td>
+			<td>Tipo de Documento</td>
+			<td>Identificación</td>
+			<td>Nombres y apellidos</td>
+			<td>Dirección</td>
+			<td>Fec nacimiento</td>
+			<td>Edad</td>
+			<td>Preferencias</td>
+			<td>Foto</td>
+		</tr>
+		{% if estudiantes is defined %}
+			{% for datos in estudiantes %}
+				<tr>
+					<td>
+						<input class="btn btn-primary" type="checkbox" data-edadestud="{{datos.edad}}" data-colegio--estudiantes-target="seleccion" data-action="Colegio--estudiantes#promedioNew" data-colegio--estudiantes-edad-param={{datos.edad}}>
+					</td>
+					<td>{{datos.id}}</td>
+					<td>{{(datos.tipoId.tipoId)}}</td>
+					<td>{{datos.identificacion}}</td>
+					<td>{{datos.nombres}}
+						{{datos.apellidos}}</td>
+					<td>{{datos.direccion}}</td>
+					<td>{{datos.fechaNac|date('y-m-d')}}</td>
+					<td>{{datos.edad}}</td>
+					<td>{{datos.Preferencias|replace({'1': 'Deporte','2': 'Television','3': 'Lectura'}) }}</td>
+					<td><img style="width:30px" src="data:image;base64,{{datos.foto}}"></td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</table>
+
+<div class="navigation">
+    {{ knp_pagination_render(estudiantes) }}
+</div>
+</turbo-frame>
