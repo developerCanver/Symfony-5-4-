@@ -9,6 +9,9 @@ use App\Form\Colegio\EstudiantesType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class estudianteController extends AbstractController{
 
@@ -17,8 +20,26 @@ class estudianteController extends AbstractController{
         return $this->render('Colegio\Estudiantes\Listar\listarEstudiantes.html.twig');
     }
 
+    public function frmFiltro(){//createFormBuilder se lo utiliiza  para tener inpues si guardar infpormacion
+        $formFiltro= 
+                $this->createFormBuilder(null,array('method' => 'POST','action'=>$this->generateUrl('colegioframeTablaEstud')))
+                ->add('id',TextType::class, array('label'=>'id','required'=>false))
+                ->add('identificacion',TextType::class,array('label'=>'Identificación','required'=>false))
+                ->add('nombres',TextType::class,array('label'=>'Nombres','required'=>false))
+                ->add('reset',ResetType::class,array('label'=>' '))
+                ->add('buscar',SubmitType::class,array('label'=>' '))
+                ->getForm();
+
+                return $this->render('Colegio\Estudiantes\Listar\formFltsEstudiantes.html.twig', array('form'=>$formFiltro->createView()));
+
+    }
+
     public function frameTablaEstud(estudianteRepository $estudiantes,PaginatorInterface $paginator, Request $request){
-        $lisEst=$estudiantes->lisEst();  
+       // dump($request->request->get('form'));exit();
+        $lisEst=$estudiantes->FltsEstudiante($request->request->get('form'));  
+        //dd($lisEst);
+
+//        $lisEst=$estudiantes->lisEst();  
         $pagination = $paginator->paginate($lisEst, $request->query->getInt('page', 1), 10);
         return $this->render('Colegio\Estudiantes\Listar\frameTablaEstudiante.html.twig', array('estudiantes'=> $pagination));
     }
@@ -44,7 +65,7 @@ class estudianteController extends AbstractController{
     public function guardarEstudiantes($id, Request $request,EntityManagerInterface $em){
         
         //dump($request->files->get('estudiantes')['foto']);exit;
-        
+        $fotoAnt=null;
         if ($id==0) {//cree el estudiante
             $estudiante=new estudiante();
             $estudiante->setFechaCrea(new \DateTime('now'));
@@ -87,11 +108,15 @@ class estudianteController extends AbstractController{
         return $this->redirectToRoute('colegioframeTablaEstud');
     }
   
-    public function eliminarEstudiante($id, EntityManagerInterface $em){
-        $estudiante = $em->getRepository(estudiante::class)->find($id);
-        $em->remove($estudiante);
+    public function eliminarEstudiante(Request $request,EntityManagerInterface $em){
+        $idsEliminar=explode(",",$request->request->get("idEliminar"));
+      //  dd($idsEliminar);exit;
+        foreach ($idsEliminar as $id) {
+            $estudiante = $em->getRepository(estudiante::class)->find($id);
+            $em->remove($estudiante);
+        }
         $em->flush();
-        return $this->redirectToRoute('colegioEstudListar');
+        return $this->redirectToRoute('colegioframeTablaEstud');
     }
 
     public function promedioEdades(Request $request){
@@ -101,6 +126,16 @@ class estudianteController extends AbstractController{
         }
         $promEdad=array_sum($datoEdad)/count($datoEdad);
        return new Response(json_encode( array("Resultado"=>$promEdad) ));
+    }
+
+    public function validaIdentificacion($identificacion, estudianteRepository $em){
+        $existe = $em->findOneBy(array('identificacion' => $identificacion));
+        if (empty($existe)) {
+            $validacion=false;
+        }else{
+            $validacion=true;
+        }
+        return New Response(json_encode(array("res"=>$validacion)));
     }
 }
 

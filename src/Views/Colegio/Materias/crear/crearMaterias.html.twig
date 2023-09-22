@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+	{{ form_start(form,{'attr':{'data-turbo-frame':'tablaMaterias'}}) }}
+	<div class="container-fluid">
+		<div class="list-group-item">
+
+			<div class="mb-3 row">
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{form_label(form.materia, form.materia,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
+						</div>
+						{{form_widget(form.materia,{'attr':{'class':'form-control'}})}}
+					</div>
+				</div>
+			</div>
+
+			
+		</div>
+		<div class="list-group-item">
+        {{form_widget(form.submit,{'attr':{'class':'btn btn-primary'}})}}
+        </div>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock %}

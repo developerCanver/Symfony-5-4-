@@ -1,8 +1,10 @@
 import { Controller } from '@hotwired/stimulus';
-import { Modal } from 'bootstrap';
-import Mensaje from '../../../src/Controller/Central/mensaje';
+import { Modal }    from 'bootstrap';
+import Mensajes     from '../../../src/Controller/Central/mensajes';
+import sweetalert   from '../../../src/Controller/Central/sweetalert';
+
 export default class extends Controller {
-    static targets = ["Mensaje", "seleccion", "modalnueEst", "modalFrmNewEst"];
+    static targets = ["Mensaje", "seleccion", "modalnueEst", "modalFrmNewEst","listaEstudiantes"];
     static values = {
         count: Number,
         vrInicial: Number,
@@ -10,6 +12,7 @@ export default class extends Controller {
         edadAcumulada: Number,
         url: String,
         modal: Object,
+        //arrayEliminar:Object,
 
     }
     //aterrizar las variables
@@ -17,7 +20,12 @@ export default class extends Controller {
     count = this.vrInicialValue;
     noEstudiantes = 0;
     edadAcumulada = 0;
-    mesajes = new Mensaje();
+    mensajes = new Mensajes();
+    arrayEliminar=[];
+    alertas= new sweetalert();
+
+
+
     connect() {
         //console.log("hola mundo");
     }
@@ -46,16 +54,20 @@ export default class extends Controller {
         if (event.target.checked == true) {
             this.noEstudiantes++;
             this.edadAcumulada = this.edadAcumulada + parseInt(event.params.edad);
+            this.arrayEliminar.push(event.params.idestudiante);
         } else {
             this.noEstudiantes--;
             this.edadAcumulada = this.edadAcumulada - parseInt(event.params.edad);
 
+            let index=this.arrayEliminar.indexOf(event.params.idestudiante);
+            this.arrayEliminar.splice(index,1);
+
         }
         let promEdades = this.edadAcumulada / this.noEstudiantes;
         this.MensajeTarget.innerHTML = "Pormedio de edades=>" + promEdades;
+        console.log(this.arrayEliminar);
     }
     async promFecth() {
-
         // console.log('URL:'+this.urlValue);
 
         let form = new FormData();
@@ -88,15 +100,71 @@ export default class extends Controller {
     }
 
     async nueEstudiante(event) {
+        let idEstudiante=event.params.idestudiante;
+        console.log(event.params.idestudiante);
+        let ruta    = event.params.urlform;
+        if (idEstudiante!="") {
+            ruta =ruta+"/"+idEstudiante;
+        }
+
         this.modal = new Modal(this.modalnueEstTarget);
-        const formulario = await fetch(event.params.urlform);
+        const formulario = await fetch(ruta);
         this.modalFrmNewEstTarget.innerHTML = await formulario.text();
         $('.selectpicker').selectpicker();
         this.modal.show();
     }
 
+    async consEstuId(env){
+
+        if (env.target.value!="") {
+            
+            //llamado al meetodo de get para consultar so exite el estudiante con su numero de cedula
+            let ruta ='/colegio/estudiantes/validaidEstu/{identificacion}';
+            ruta = ruta.replace('{identificacion}',env.target.value);
+            const peticion = await fetch(ruta); 
+            let resultado = await  peticion.json();
+            if (resultado.res==true) {
+                this.alertas.alerta("error","Identificacion repetida","Validacion","Cerrar");
+                //this.mensajes.mostrarMensaje('Identificacion de estudiante repetida',2);
+            }
+        }
+    }
+    async eliminarEstudiantes(envet){
+
+        /* if(!(Array.isArray(this.arrayEliminar) && !this.arrayEliminar.length)){
+            console.log('arrelgo con datos ');
+        } else {
+            console.log('arregl vacio');
+            
+        } */
+        if(!(Array.isArray(this.arrayEliminar) && !this.arrayEliminar.length)){
+            
+            let confirmacio=await this.alertas.alerta("confirmation","Desea eliminar el Estudiante","Eliminación","Eliminar");
+            if (confirmacio.isConfirmed) {
+                
+                let ruta=envet.params.urlelim;
+                let form= new FormData();
+                form.append("idEliminar",this.arrayEliminar);
+                const eliminar = await fetch(ruta,{
+                    method:'POST',
+                    body:form
+                });
+                //this.mensajes.mostrarMensaje('Registros Eliminados',1);
+                this.arrayEliminar=[];
+                // console.log(await eliminar.text());
+                this.listaEstudiantesTarget.innerHTML=await eliminar.text();
+                this.alertas.alerta("info","Registro eliminado Exitosamente","Eliminación","OK");
+            }
+        }else{
+            this.mensajes.mostrarMensaje('Se debe selecionar los registros a Eliminar',2);
+
+        }
+
+
+
+    }
     cerraModal() {
         this.modal.hide();
-        this.mensajes.mostrarMensaje('Estudiante Creado con Exito',1);
+        this.mensajes.mostrarMensaje('Estudiante guardado con Exito',1);
     }
 }

@@ -1,0 +1,27 @@
+<turbo-frame id="tablaMaterias">
+
+	<table class="table table-sm table-striped table-hover">
+	<tr><td>Lista de Materiass</td></tr>
+		<tr>
+			<td></td>
+			<td>Id</td>
+			<td>Materia</td>
+		</tr>
+		{% if materias is defined %}
+			{% for datos in materias %}
+				<tr>
+					<td>
+						
+					</td>
+					<td>{{datos.id}}</td>
+					<td>{{(datos.materias)}}</td>
+				
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</table>
+
+<div class="navigation">
+    {{ knp_pagination_render(materias) }}
+</div>
+</turbo-frame>

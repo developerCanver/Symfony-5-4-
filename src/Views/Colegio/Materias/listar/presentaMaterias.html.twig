@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	{# <div class="container" data-controller="Colegio--estudiantes"> #}
+	<div class="container" {{ stimulus_controller('Colegio--materias' )}}>
+
+		<div class="list-group-item">
+			<turbo-frame id="frameFormMaterias" src="{{path('colegioFormMaterias')}}">
+                <br><br><br>
+                {{ include("loadig.html.twig") }}
+                <center><span class="loader"></span></center>
+			</turbo-frame>
+		</div>
+
+        <div class="list-group-item">
+			<turbo-frame id="frameListaMaterias" src="{{path('colegioTablaMaterias')}}">
+                <br><br><br>
+                {{ include("loadig.html.twig") }}
+                <center><span class="loader"></span></center>
+			</turbo-frame>
+		</div>
+	</div>
+{% endblock %}

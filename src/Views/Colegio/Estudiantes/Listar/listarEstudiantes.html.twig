@@ -4,17 +4,32 @@
 	<div class="container" {{ stimulus_controller('Colegio--estudiantes',{'vrInicial':1000, 'url':path('colegioPromEdades') } )}}>
 		<div class="list-group-item active">
 			<h2>Listado General de estudiantes</h2>
-
-			<button type="button" data-action="Colegio--estudiantes#contador" class="btn btn-primary">Contador</button>
-			<button type="button" data-action="Colegio--estudiantes#promedio" class="btn btn-primary">Promedio de edades</button>
-			<button type="button" data-action="Colegio--estudiantes#promFecth" class="btn btn-primary">Promedio Fetch</button>
-
-			<button type="button" data-action="Colegio--estudiantes#nueEstudiante" class="btn btn-primary" data-colegio--estudiantes-urlform-param="{{path('colegioEstudCrear')}}">Crear Estudiante</button>
-
-			<div data-colegio--estudiantes-target="Mensaje">mensaje</div>
 		</div>
 		<div class="list-group-item">
-			<turbo-frame id="tablaEstudiante" src="{{path('colegioframeTablaEstud')}}">
+
+			<button type="button" data-action="Colegio--estudiantes#contador" class="btn btn-secondary">Contador</button>
+			<button type="button" data-action="Colegio--estudiantes#promedio" class="btn btn-primary">Promedio de edades</button>
+			<button type="button" data-action="Colegio--estudiantes#promFecth" class="btn btn-info">Promedio Fetch</button>
+			<button type="button" data-action="Colegio--estudiantes#eliminarEstudiantes"
+					data-colegio--estudiantes-urlelim-param="{{path('colegioEstudEliminar')}}" class="btn btn-danger">Eliminar Estudiantes</button>
+
+			<button type="button" class="btn btn-success" 
+					data-action="Colegio--estudiantes#nueEstudiante" 
+					data-colegio--estudiantes-urlform-param="{{path('colegioEstudCrear')}}">Crear Estudiante</button>
+
+			<div data-colegio--estudiantes-target="Mensaje">Mensaje</div>
+		</div>
+
+		<turbo-frame id="frmFltsEstudianates" src="{{path('colegiofltsEstudiantes')}}">
+			<br><br><br>
+			{{ include("loadig.html.twig") }}
+			<center>
+				<span class="loader"></span>
+			</center>
+		</turbo-frame>
+
+		<div class="list-group-item">
+			<turbo-frame id="tablaEstudiante" src="{{path('colegioframeTablaEstud')}}" data-colegio--estudiantes-target="listaEstudiantes">
 			<br><br><br>
 			{{ include("loadig.html.twig") }}
 			<center>

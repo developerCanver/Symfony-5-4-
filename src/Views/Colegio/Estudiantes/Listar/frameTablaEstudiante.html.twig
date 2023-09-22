@@ -14,12 +14,19 @@
 			<td>Edad</td>
 			<td>Preferencias</td>
 			<td>Foto</td>
+			<td>Editar</td>
 		</tr>
 		{% if estudiantes is defined %}
 			{% for datos in estudiantes %}
 				<tr>
 					<td>
-						<input class="btn btn-primary" type="checkbox" data-edadestud="{{datos.edad}}" data-colegio--estudiantes-target="seleccion" data-action="Colegio--estudiantes#promedioNew" data-colegio--estudiantes-edad-param={{datos.edad}}>
+						<input class="btn btn-primary" type="checkbox" 
+								data-edadestud="{{datos.edad}}" 
+								data-colegio--estudiantes-target="seleccion" 
+								data-action="Colegio--estudiantes#promedioNew" 
+								data-colegio--estudiantes-edad-param={{datos.edad}}
+								data-colegio--estudiantes-idestudiante-param={{datos.id}}
+						>
 					</td>
 					<td>{{datos.id}}</td>
 					<td>{{(datos.tipoId.tipoId)}}</td>
@@ -31,6 +38,14 @@
 					<td>{{datos.edad}}</td>
 					<td>{{datos.Preferencias|replace({'1': 'Deporte','2': 'Television','3': 'Lectura'}) }}</td>
 					<td><img style="width:30px" src="data:image;base64,{{datos.foto}}"></td>
+					<td> 
+						<i style="cursor: pointer;" class="fa-solid fa-pencil"
+							data-action="click->Colegio--estudiantes#nueEstudiante"
+							data-Colegio--estudiantes-urlform-param="{{path('colegioEstudCrear')}}"
+							data-Colegio--estudiantes-idestudiante-param="{{datos.id}}"
+							>
+							</i>
+					</td>
 				</tr>
 			{% endfor %}
 		{% endif %}

@@ -45,11 +45,32 @@ colegioEstudGuardar:
     defaults: {_controller: App\Controller\Colegio\estudianteController::guardarEstudiantes, id: 0}
 
 colegioEstudEliminar:
-    path: /colegio/estudiantes/eliminar/{id}
+    path: /colegio/estudiantes/eliminar
     defaults: {_controller: App\Controller\Colegio\estudianteController::eliminarEstudiante}
+    methods: 'POST'
 
 colegioPromEdades:
     path: /colegio/estudiantes/promedioEdades
     defaults: {_controller: App\Controller\Colegio\estudianteController::promedioEdades}
 
+colegiovalidaIdEstu:
+    path: /colegio/estudiantes/validaidEstu/{identificacion}
+    defaults: {_controller: App\Controller\Colegio\estudianteController::validaIdentificacion}
 
+colegiofltsEstudiantes:
+    path: /colegio/estudiantes/frmFltsEstudiantes
+    defaults: {_controller: App\Controller\Colegio\estudianteController::frmFiltro}
+
+#------------------------------------------MATERIAS-------------------------------------------------------------------------------
+
+colegioListarMaterias:
+    path: /colegio/materias/listarMaterias
+    defaults: {_controller: App\Controller\Colegio\materiasController::PresentaMaterias}
+
+colegioFormMaterias:
+    path: /colegio/materias/crear/{id}
+    defaults: {_controller: App\Controller\Colegio\materiasController::crearMaterias, id: 0}
+
+colegioTablaMaterias:
+    path: /colegio/materias/tablaMaterias
+    defaults: {_controller: App\Controller\Colegio\materiasController::frameTableMaterias}

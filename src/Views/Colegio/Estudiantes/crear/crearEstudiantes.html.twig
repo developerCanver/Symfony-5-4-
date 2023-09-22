@@ -58,7 +58,7 @@
 						<div class="input-group-prepend">
 							{{form_label(form.identificacion, form.identificacion,{'label_attr':{'class':'input-group-text','style':'width:120px'}})}}
 						</div>
-						{{form_widget(form.identificacion,{'attr':{'class':'form-control'}})}}
+						{{form_widget(form.identificacion,{'attr':{'class':'form-control', 'data-action':'blur->Colegio--estudiantes#consEstuId'}})}}
 					</div>
 				</div>
 			</div>

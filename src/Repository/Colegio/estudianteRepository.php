@@ -47,7 +47,46 @@ class estudianteRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-  
+  public function FltsEstudiante($formulario){
+
+    $parameters = array();
+
+    if (!empty($formulario['id'])) {
+      $cont1 = "estudiante.id = :id";
+      $parameters[':id'] = $formulario['id'];
+    }else {
+      $cont1= "1 = 1";
+    }
+
+    if (!empty($formulario['identificacion'])) {
+        $cont2 = "estudiante.identificacion = :identificacion";
+        $parameters[':identificacion'] = $formulario['identificacion'];
+    }else {
+        $cont2= "1 = 1";
+    }
+
+    if (!empty($formulario['nombres'])) {
+        $cont3 = " lower(concat(estudiante.apellidos,' ',estudiante.nombres)) like :nombres or lower(concat(estudiante.nombres,' ',estudiante.apellidos)) like :nombres ";
+        //$cont3 = " (concat(estudiante.apellidos,' ',estudiante.nombres)) = :nombres or (concat(estudiante.nombres,' ',estudiante.apellidos)) = :nombres";
+        $parameters[':nombres'] = '%'. strtolower($formulario['nombres']).'%';
+    }else {
+        $cont3= "1 = 1";
+    }
+        
+    //->where('tipoId.tipo_id like :letra')
+    //->setParameter('letra', '%'.$letra.'%') 
+
+    // dump($parameters);dump($cont1);exit;
+    return $this->createQueryBuilder('estudiante')
+                //->Where('1=1')
+                ->andWhere($cont1)
+                ->andWhere($cont2)
+                ->andWhere($cont3)
+                ->setParameters($parameters)
+                ->orderBy('estudiante.id', 'ASC')
+                ->getQuery()
+                ->getResult();
+  }
 
     //    /**
     //     * @return estudiante[] Returns an array of estudiante objects

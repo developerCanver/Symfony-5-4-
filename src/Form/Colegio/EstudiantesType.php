@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,7 +48,8 @@ class EstudiantesType extends AbstractType
             ))
             ->add('identificacion',    TextType::class, array(
                         'label'         => 'Identificación',
-                        'attr'          =>  ['Placeholder'=>'Identificación del estudiante']
+                        //'html5'          =>  true,
+                        'attr'          =>  ['Placeholder'=>'Identificación del estudiante','minlength'=>8,'maxlength'=>15]
             ))
             ->add('foto', FileType::class, array(
                         'label'         => 'Foto',

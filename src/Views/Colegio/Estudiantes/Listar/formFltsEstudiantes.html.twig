@@ -1,0 +1,44 @@
+<turbo-frame id="frmFltsEstudianates">
+	<div class="container-fluid">
+		{{ form_start(form, {'attr':{'data-turbo-frame':'tablaEstudiante'}}) }}
+			<div class="mb-1 row">
+
+				<div class="col-2">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{ form_label(form.id, form.id, {'label_attr':{'class':'input-group-text', 'style':'width:50px;'}}) }}
+						</div>
+						{{ form_widget(form.id, {'attr':{'class':'form-control'}}) }}
+					</div>
+				</div>
+
+				<div class="col-3">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{ form_label(form.identificacion, form.identificacion, {'label_attr':{'class':'input-group-text', 'style':'width:120px;'}}) }}
+						</div>
+						{{ form_widget(form.identificacion, {'attr':{'class':'form-control'}}) }}
+					</div>
+				</div>
+				<div class="col-7">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{ form_label(form.nombres, form.nombres, {'label_attr':{'class':'input-group-text', 'style':'width:120px;'}}) }}
+						</div>
+						{{ form_widget(form.nombres, {'attr':{'class':'form-control'}}) }}
+						<div class="input-group-prepend">
+							{{form_widget(form.buscar,{'attr':{'class':'input-group-text fa-solid fa-magnifying-glass'}}) }}
+						</div>
+						<div class="input-group-prepend">
+							{{form_widget(form.reset,{'attr':{'class':'input-group-text fa-solid fa-broom'}}) }}
+						</div>
+					</div>
+				</div>
+			
+
+
+			</div>
+
+		{{ form_end(form) }}
+	</div>
+</turbo-frame>

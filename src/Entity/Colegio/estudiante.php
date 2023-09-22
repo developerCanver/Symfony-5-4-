@@ -3,6 +3,8 @@
 namespace App\Entity\Colegio;
 
 use App\Repository\Colegio\estudianteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -73,6 +75,16 @@ class estudiante
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $preferencias;
+
+    /**
+     * @ORM\OneToMany(targetEntity=notas::class, mappedBy="estudiante")
+     */
+    private $notas;
+
+    public function __construct()
+    {
+        $this->notas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -207,6 +219,36 @@ class estudiante
     public function setPreferencias($preferencias): self
     {
         $this->preferencias = $preferencias;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, notas>
+     */
+    public function getNotas(): Collection
+    {
+        return $this->notas;
+    }
+
+    public function addNota(notas $nota): self
+    {
+        if (!$this->notas->contains($nota)) {
+            $this->notas[] = $nota;
+            $nota->setEstudiante($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNota(notas $nota): self
+    {
+        if ($this->notas->removeElement($nota)) {
+            // set the owning side to null (unless already changed)
+            if ($nota->getEstudiante() === $this) {
+                $nota->setEstudiante(null);
+            }
+        }
 
         return $this;
     }
