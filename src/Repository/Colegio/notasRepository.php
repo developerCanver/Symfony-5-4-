@@ -39,6 +39,21 @@ class notasRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function construirPendiente($id){
+
+        $em=$this->getEntityManager()->getConnection();
+        $sql=" Insert into colegio.notas(id,materia_id, estudiante_id,nota)
+            select nextval('colegio.notas_id_seq'),materias.id,estudiantes.id,0
+            from colegio.materias,colegio.estudiantes
+            where estudiantes.id=:idEstudiante
+            and materias.id not in (select materia_id from colegio.notas where estudiante_id=:idEstudiante)
+            RETURNING notas.id,materia_id";
+            
+      $excec=$em->prepare($sql);
+      $res=$excec->executeQuery(['idEstudiante'=>$id])->fetchAllAssociative();
+      return $res;
+    }
 //    /**
 //     * @return notas[] Returns an array of notas objects
 //     */

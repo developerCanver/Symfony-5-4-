@@ -7,12 +7,8 @@ use App\Entity\Colegio\materias;
 use App\Form\Colegio\MateriasType;
 use App\Repository\Colegio\materiasRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Validator\Constraints\Regex;
+
 
 class materiasController extends AbstractController{
 
@@ -34,9 +30,9 @@ class materiasController extends AbstractController{
             $materias=$em->getRepository(materias::class)->find($id);
         }
 
-        $forma=$this->createForm(MateriasType::class, $materias, array('methop'=>'POST','action'=>$this->generateUrl('colegioGuardarMaterias',array('id'=>$id))));
+        $forma=$this->createForm(MateriasType::class, $materias, array('method' => 'POST','action'=>$this->generateUrl('colegioGuardarMaterias',array('id'=>$id))));
 
-        return $this->render('Colegio\Materias\crear\crearMaterias.html.twig',array('form'=>$forma->createView()));
+        return $this->render('Colegio\Materias\Crear\crearMaterias.html.twig',array('form'=>$forma->createView()));
     }
 
 
@@ -48,14 +44,26 @@ class materiasController extends AbstractController{
             $materias=$em->getRepository(materias::class)->find($id);
         }
 
-        $forma=$this->createForm(MateriasType::class, $materias, array('methop'=>'POST','action'=>$this->generateUrl('colegioGuardarMaterias')));
+        //dd($materias);exit;
+        $forma=$this->createForm(MateriasType::class, $materias, array('method' => 'POST','action'=>$this->generateUrl('colegioGuardarMaterias')));
         $forma->handleRequest($request);
 
        if ($id==0) {
             $em->persist($materias);
         }
         $em->flush();
-        return $this->redirectToRoute('colegioFrameMaterias');
+        return $this->redirectToRoute('colegioTablaMaterias');
+    }
+
+    public function eliminarMateria(Request $request, EntityManagerInterface $em){
+        //$idsEliminar=explode(",",$request->request->get("idEliminar"));
+        $idsEliminar=$request->request->get("idEliminar");
+      //  dd($idsEliminar);exit;
+       
+        $materias = $em->getRepository(materias::class)->find($idsEliminar);
+        $em->remove($materias);
+        $em->flush();
+        return $this->redirectToRoute('colegioTablaMaterias');
     }
 
 }

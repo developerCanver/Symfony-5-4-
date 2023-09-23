@@ -1,0 +1,29 @@
+
+<table class="table table-sm table-striped table-hover">
+<tr><td colspan="3" align="center">Notas del Estudiante <strong> {{estudiante.apellidos}} {{estudiante.nombres}} </strong></td></tr>
+    <tr>
+        <td>Id</td>
+        <td>Materia</td>
+        <td>Nota</td>
+    </tr>
+    {% if listaNotas is defined %}
+        {% for datos in listaNotas %}
+            <tr>
+                
+                <td>{{datos.id}}</td>
+                <td style="width: 350px;">{{(datos.materia.materia)}}</td>
+                <td> <input type="text" value="{{datos.nota}}" class="form-comtrol" style="width: 50px;align:right ;"
+                        data-action="blur->Colegio--estudiantes#guardarNotaEstu"
+                        data-Colegio--estudiantes-idnota-param="{{datos.id}}"
+                        data-Colegio--estudiantes-urlnota-param="{{path('colegioNotaGuardar')}}"
+                        data-Colegio--estudiantes-target="nota"
+                ></td>
+            
+            </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+   
+<div  role="alert" data-Colegio--estudiantes-target="msjpromedio">
+    
+</div>

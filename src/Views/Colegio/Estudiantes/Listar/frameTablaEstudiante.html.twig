@@ -27,6 +27,12 @@
 								data-colegio--estudiantes-edad-param={{datos.edad}}
 								data-colegio--estudiantes-idestudiante-param={{datos.id}}
 						>
+
+						<i class="fa-solid fa-book-open-reader" style="color: #414dda;cursor:pointer"
+								data-action="click->Colegio--estudiantes#notaxestudiante"
+								data-Colegio--estudiantes-urlnotas-param="{{path('colegioNotasxEstudiante')}}"
+								data-Colegio--estudiantes-idestudiante-param="{{datos.id}}"
+						></i>
 					</td>
 					<td>{{datos.id}}</td>
 					<td>{{(datos.tipoId.tipoId)}}</td>

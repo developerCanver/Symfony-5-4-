@@ -1,0 +1,20 @@
+
+<div class="container" {{ stimulus_controller('Colegio--materias' )}}>
+
+	<div class="list-group-item">
+		<turbo-frame id="frameFormMaterias" src="{{path('colegioFormMaterias')}}" data-Colegio--materias-target="fromMaterias">
+			<br><br><br>
+			{{ include("loadig.html.twig") }}
+			<center><span class="loader"></span></center>
+		</turbo-frame>
+	</div>
+
+	<div class="list-group-item">
+		<turbo-frame id="frameListaMaterias" src="{{path('colegioTablaMaterias')}}" data-Colegio--materias-target="listaMaterias">
+			<br><br><br>
+			{{ include("loadig.html.twig") }}
+			<center><span class="loader"></span></center>
+		</turbo-frame>
+	</div>
+</div>
+

@@ -1,0 +1,38 @@
+<turbo-frame id="frameListaMaterias">
+
+	<table class="table table-sm table-striped table-hover">
+	<tr><td colspan="3" align="center">Lista de Materias</td></tr>
+		<tr>
+			<td></td>
+			<td>Id</td>
+			<td>Materia</td>
+		</tr>
+		{% if materias is defined %}
+			{% for datos in materias %}
+				<tr>
+					<td>
+						<i  class="fa-solid fa-trash" style="color: #dd0005;cursor:pointer"
+							data-action="click->Colegio--materias#eliminarMateria"
+							data-Colegio--materias-idmateria-param="{{datos.id}}"
+							data-Colegio--materias-urleliminarmateria-param="{{path('colegioMateriasEliminar')}}"
+
+						></i>
+						&nbsp;&nbsp;
+						<i class="fa-solid fa-pen-to-square" style="cursor:pointer"
+							data-action="click->Colegio--materias#modificarMateria"
+							data-Colegio--materias-idmateria-param="{{datos.id}}"
+							data-Colegio--materias-urlnotas-param="{{path('colegioNotasxEstudiante')}}"
+						></i>
+					</td>
+					<td>{{datos.id}}</td>
+					<td>{{(datos.materia)}}</td>
+				
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</table>
+
+<div class="navigation">
+    {{ knp_pagination_render(materias) }}
+</div>
+</turbo-frame>

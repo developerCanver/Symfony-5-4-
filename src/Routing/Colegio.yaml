@@ -74,3 +74,21 @@ colegioFormMaterias:
 colegioTablaMaterias:
     path: /colegio/materias/tablaMaterias
     defaults: {_controller: App\Controller\Colegio\materiasController::frameTableMaterias}
+
+colegioGuardarMaterias:
+    path: /colegio/materias/guardar/{id}
+    defaults: {_controller: App\Controller\Colegio\materiasController::guardarMaterias, id: 0}
+
+colegioMateriasEliminar:
+    path: /colegio/materias/eliminar
+    defaults: {_controller: App\Controller\Colegio\materiasController::eliminarMateria}
+    methods: 'POST'
+
+colegioNotasxEstudiante:
+    path: /colegio/notas/listar/{id}
+    defaults: {_controller: App\Controller\Colegio\notasController::registrarNotas, id: 0}
+
+colegioNotaGuardar:
+    path: /colegio/notas/guardar
+    defaults: {_controller: App\Controller\Colegio\notasController::guardarNotas}
+    methods: 'POST'

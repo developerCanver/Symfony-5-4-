@@ -4,7 +4,7 @@ import Mensajes     from '../../../src/Controller/Central/mensajes';
 import sweetalert   from '../../../src/Controller/Central/sweetalert';
 
 export default class extends Controller {
-    static targets = ["Mensaje", "seleccion", "modalnueEst", "modalFrmNewEst","listaEstudiantes"];
+    static targets = ["Mensaje", "seleccion", "modalnueEst", "modalFrmNewEst","listaEstudiantes","msjpromedio","nota"];
     static values = {
         count: Number,
         vrInicial: Number,
@@ -163,6 +163,74 @@ export default class extends Controller {
 
 
     }
+
+    async listarMaterias(event){
+
+        let ruta    = event.params.urlmaterias;
+       /*  if (idEstudiante!="") {
+            ruta =ruta+"/"+idEstudiante;
+        } */
+
+        this.modal = new Modal(this.modalnueEstTarget);
+        const formulario = await fetch(ruta);
+        this.modalFrmNewEstTarget.innerHTML = await formulario.text();
+       // $('.selectpicker').selectpicker();
+        this.modal.show();
+    }
+    async notaxestudiante(event){
+        let ruta    = event.params.urlnotas; 
+        ruta=ruta+"/"+event.params.idestudiante; 
+         this.modal = new Modal(this.modalnueEstTarget);
+         const formulario = await fetch(ruta);
+         this.modalFrmNewEstTarget.innerHTML = await formulario.text();
+         this.promedioNotas();
+         this.modal.show();
+    }
+
+    async guardarNotaEstu(event){
+        let ruta    = event.params.urlnota; 
+        console.log(ruta);
+        let form = new FormData();
+        form.append("idNota",event.params.idnota);
+        form.append("nota",event.target.value);
+
+        const actualizacion = await fetch(ruta,{
+            method:'POST',
+            body:form
+        });
+
+        console.log('actualizacion');
+        console.log(actualizacion);
+        let resultado= await actualizacion.json();
+        if (resultado.Result==1) {
+            this.mensajes.mostrarMensaje('Nota guardada con exito',1);
+        }
+        if (resultado.Result==2) {
+            event.target.value=0;
+            event.target.focus();
+            this.mensajes.mostrarMensaje('Dato incorrecto',2);
+        }
+        this.promedioNotas();
+
+    }
+
+    async promedioNotas(){
+        let promedioNotas = 0;
+        var i = 0; var sumNotas=0;
+        this.notaTargets.forEach(element => {
+                i++;
+                sumNotas = sumNotas + parseInt(element.value);
+        });
+        promedioNotas = sumNotas / i;
+
+        if (promedioNotas<3) {
+            this.msjpromedioTarget.className = "aler alert-danger";
+        }else{
+            this.msjpromedioTarget.className = "aler alert-primary";
+        }
+        this.msjpromedioTarget.innerHTML = "promedio del estudiante <span class='alert-link'>"+promedioNotas.toFixed(2)+"</span>";
+    }
+
     cerraModal() {
         this.modal.hide();
         this.mensajes.mostrarMensaje('Estudiante guardado con Exito',1);

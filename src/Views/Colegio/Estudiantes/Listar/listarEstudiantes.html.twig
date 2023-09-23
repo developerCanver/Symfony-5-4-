@@ -17,6 +17,10 @@
 					data-action="Colegio--estudiantes#nueEstudiante" 
 					data-colegio--estudiantes-urlform-param="{{path('colegioEstudCrear')}}">Crear Estudiante</button>
 
+			<button type="button" class="btn btn-success" 
+					data-action="Colegio--estudiantes#listarMaterias" 
+					data-colegio--estudiantes-urlmaterias-param="{{path('colegioListarMaterias')}}">Listar Materias</button>
+
 			<div data-colegio--estudiantes-target="Mensaje">Mensaje</div>
 		</div>
 
@@ -45,7 +49,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Crear Estudiante</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Presentacion de info</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>

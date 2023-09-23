@@ -1,0 +1,23 @@
+<turbo-frame id="frameFormMaterias">
+	<div class="container-fluid">
+		{{ form_start(form, {'attr':{'data-turbo-frame':'frameListaMaterias', 'data-action':'turbo:submit-end->Colegio--materias#guardarMaterias',
+		'data-Colegio--materias-urlform-param':path('colegioFormMaterias')}}) }}
+			<div class="mb-1 row">
+
+				<div class="col-12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							{{ form_label(form.materia, form.materia, {'label_attr':{'class':'input-group-text', 'style':'width:100px;'}}) }}
+						</div>
+						{{ form_widget(form.materia, {'attr':{'class':'form-control'}}) }}
+						<div class="input-group-prepend">
+        					{{form_widget(form.submit,{'attr':{'class':' input-group-text fa-solid fa-floppy-disk', 'style':'color: #0000ff;'}})}}
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+
+		{{ form_end(form) }}
+	</div>
+</turbo-frame>
